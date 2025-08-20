@@ -1,0 +1,19 @@
+{
+    "dependencies": {
+        "@tailwindcss/postcss": "^4.1.12",
+        "autoprefixer": "^10.4.21",
+        "ethers": "^5.8.0",
+        "postcss": "^8.5.6",
+        "postcss-cli": "^11.0.1",
+        "tailwindcss": "^4.1.12"
+    },
+    "scripts": {
+        "start": "live-server",
+        "build": "webpack",
+        "build:css": "postcss styles.css -o dist/styles.css"
+    },
+    "devDependencies": {
+        "@types/node": "^24.3.0",
+        "typescript": "^5.9.2"
+    }
+}
