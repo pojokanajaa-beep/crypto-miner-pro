@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoMiner Pro - Advanced Blockchain Mining</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'crypto-dark': '#0a0a0a',
+                        'crypto-gray': '#1a1a1a',
+                        'crypto-light': '#2a2a2a',
+                        'crypto-accent': '#00ff88',
+                        'crypto-blue': '#0088ff',
+                        'crypto-purple': '#8b5cf6'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+        }
+        .crypto-glow {
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+        .mining-animation {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .hash-animation {
+            animation: slideIn 0.5s ease-in-out;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-crypto-dark text-white font-sans">
+    <!-- Header -->
+    <header class="bg-crypto-gray/50 backdrop-blur-sm border-b border-crypto-light/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-coins text-crypto-accent text-2xl"></i>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-crypto-accent to-crypto-blue bg-clip-text text-transparent">
+                        CryptoMiner Pro
+                    </h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-sm text-gray-400">
+                        <span id="network-status" class="flex items-center">
+                            <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                            Network: Active
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-crypto-gray rounded-xl p-6 border border-crypto-light/20">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-400">Total Blocks</p>
+                        <p id="total-blocks" class="text-2xl font-bold text-crypto-accent">0</p>
+                    </div>
+                    <i class="fas fa-cube text-crypto-accent text-xl"></i>
+                </div>
+            </div>
+            <div class="bg-crypto-gray rounded-xl p-6 border border-crypto-light/20">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-400">Hash Rate</p>
+                        <p id="hash-rate" class="text-2xl font-bold text-crypto-blue">0 H/s</p>
+                    </div>
+                    <i class="fas fa-tachometer-alt text-crypto-blue text-xl"></i>
+                </div>
+            </div>
+            <div class="bg-crypto-gray rounded-xl p-6 border border-crypto-light/20">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-400">Difficulty</p>
+                        <p id="difficulty" class="text-2xl font-bold text-crypto-purple">4</p>
+                    </div>
+                    <i class="fas fa-chart-line text-crypto-purple text-xl"></i>
+                </div>
+            </div>
+            <div class="bg-crypto-gray rounded-xl p-6 border border-crypto-light/20">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-400">Last Reward</p>
+                        <p id="last-reward" class="text-2xl font-bold text-yellow-400">0</p>
+                    </div>
+                    <i class="fas fa-coins text-yellow-400 text-xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mining Control -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Mining Panel -->
+            <div class="lg:col-span-2">
+                <div class="bg-crypto-gray rounded-xl p-6 border border-crypto-light/20">
+                    <h2 class="text-xl font-semibold mb-4 flex items-center">
+                        <i class="fas fa-hammer mr-2 text-crypto-accent"></i>
+                        Mining Control
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <button id="start-mining" class="bg-crypto-accent text-crypto-dark px-6 py-3 rounded-lg font-semibold hover:bg-crypto-accent/80 transition-colors">
+                                <i class="fas fa-play mr-2"></i>Start Mining
+                            </button>
+                            <button id="stop-mining" class="bg-red-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-600 transition-colors hidden">
+                                <i class="fas fa-stop mr-2"></i>Stop Mining
+                            </button>
+                            <button id="reset-blockchain" class="bg-crypto-blue text-white px-6 py-3 rounded-lg font-semibold hover:bg-crypto-blue/80 transition-colors">
+                                <i class="fas fa-undo mr-2"></i>Reset Chain
+                            </button>
+                        </div>
+
+                        <div class="bg-crypto-light rounded-lg p-4">
+                            <h3 class="text-sm font-semibold text-gray-300 mb-2">Current Block</h3>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Index:</span>
+                                    <span id="current-index" class="text-crypto-accent">0</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Previous Hash:</span>
+                                    <span id="previous-hash" class="text-crypto-blue font-mono text-xs">0</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Nonce:</span>
+                                    <span id="current-nonce" class="text-crypto-purple">0</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Hash:</span>
+                                    <span id="current-hash" class="text-crypto-accent font-mono text-xs">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mining Progress -->
+                <div class="bg-crypto-gray rounded-xl p-6 border border-crypto-light/20 mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Mining Progress</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm mb-2">
+                                <span>Progress</span>
+                                <span id="mining-progress">0%</span>
+                            </div>
+                            <div class="w-full bg-crypto-light rounded-full h-2">
+                                <div id="progress-bar" class="bg-crypto-accent h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div id="mining-log" class="bg-crypto-light rounded-lg p-4 h-32 overflow-y-auto font-mono text-xs">
+                            <div class="text-gray-400">Mining log will appear here...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blockchain Explorer -->
+            <div class="lg:col-span-1">
+                <div class="bg-crypto-gray rounded-xl p-6 border border-crypto-light/20">
+                    <h2 class="text-xl font-semibold mb-4 flex items-center">
+                        <i class="fas fa-link mr-2 text-crypto-accent"></i>
+                        Blockchain Explorer
+                    </h2>
+                    <div id="blockchain-list" class="space-y-3 max-h-96 overflow-y-auto">
+                        <!-- Blocks will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-crypto-gray/50 border-t border-crypto-light/20 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="text-center text-sm text-gray-400">
+                <p>CryptoMiner Pro v2.0 - Advanced Blockchain Mining Simulation</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js" type="module"></script>
+</body>
+</html>
